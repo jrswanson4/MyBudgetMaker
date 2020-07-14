@@ -29,7 +29,7 @@ public class WelcomeFX extends Application {
 
   private static final int WINDOW_WIDTH = 1800;
   private static final int WINDOW_HEIGHT = 1000;
-  Scene SceneOne, SceneTwo;
+  Scene SceneOne, SceneTwo, SceneThree;
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -139,15 +139,33 @@ public class WelcomeFX extends Application {
     leftTwo.getChildren().addAll(questionOne, question1, space, questionTwo, question2, space2, questionThree, question3, space3, questionFour, question4);
     leftTwo.setAlignment(Pos.TOP_LEFT);
     
-    
+    HBox bottom2 = new HBox();
+    bottom2.setAlignment(Pos.BOTTOM_LEFT);
+    bottom2.setSpacing(815);
+    Button exit2 = new Button("Exit");
+    exit2.setOnAction(action -> {
+      System.exit(0);
+    });
+    Button done2 = new Button("Done");
+    done2.setOnAction(action -> {
+      primaryStage.setScene(SceneThree);
+    });
+    bottom2.getChildren().addAll(exit2, done2);
     
     sceneTwoBP.setTop(topTwo);
     sceneTwoBP.setLeft(leftTwo);
-    //sceneTwoBP.setCenter(centerTwo);
-    
+    sceneTwoBP.setBottom(bottom2);
+    //sceneTwoBP.setCenter(centerTwo); 
+  
     SceneTwo = new Scene(sceneTwoBP, WINDOW_WIDTH, WINDOW_HEIGHT);
  
+    BorderPane sceneThreeBP = new BorderPane();
+    HBox top3 = new HBox();
+    Label welcome3 = new Label("TODO: This is where the user will find the output of their new budget after it is processed, still working on the layout and design of this so it flows well with other code.");
+    top3.getChildren().add(welcome3);
+    sceneThreeBP.setTop(top3);
     
+    SceneThree = new Scene(sceneThreeBP, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     primaryStage.setTitle("Budget Maket");
     primaryStage.setScene(SceneOne);
