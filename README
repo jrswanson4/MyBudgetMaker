@@ -16,3 +16,7 @@ Coffee,5,Lunch,10
 
 In this format the BudgetMaker will then take these expenses and after getting user responses to questions formulate a new budget to help the person save money
 It will in turn output a CSV file that can be used in excel for the person to see the breakdown of their new budget.
+
+7/30/2020 update:
+I have changed the program to run based on arrays used in Java collections rather than my own created arrays for ease of use within the budget maker. This allows code to be simplified
+as well as better ease in editing and debugging. It should also save memory and decrease the time complexity of the program as a whole.
