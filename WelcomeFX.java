@@ -1,8 +1,9 @@
 package application;
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 import javafx.application.Application;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -38,6 +41,8 @@ public class WelcomeFX extends Application {
    
     
     // scene 1
+    
+    //top
     VBox top = new VBox();
     top.setPrefHeight(300);
     top.setPrefWidth(1800);
@@ -49,22 +54,31 @@ public class WelcomeFX extends Application {
     directions.setFont(new Font("Ariel", 16));
     top.getChildren().addAll(welcome, greeting, directions);
     top.setAlignment(Pos.CENTER);
-    //
-    HBox mid = new HBox();
-
     
+    //mid
+    HBox mid = new HBox();
     Button csv = new Button();
-    csv.setText("Enter a csv file");
+    FileChooser fileChooser = new FileChooser();
+    csv.setText("Select CSV File");
     csv.setOnAction(action -> {
-      TextField csvField = new TextField("Type Filename");
+      File selectedFile = fileChooser.showOpenDialog(primaryStage);
       mid.getChildren().add(new Label("\n" + ""));
-      mid.getChildren().add(csvField);
-      // add code to get file name and compile it
-      csv.setDisable(true);
+      if(selectedFile.getName().contains(".csv")) {
+        BudgetMakerDriver driver = new BudgetMakerDriver();
+        driver.go(selectedFile);
+        
+      }else {
+        Alert errorAlert = new Alert(AlertType.ERROR);
+        errorAlert.setHeaderText("File invalid");
+        errorAlert.setContentText("File must be of type .csv");
+        errorAlert.showAndWait();
+      }
+      
     });
     mid.getChildren().add(csv);
     mid.setAlignment(Pos.TOP_CENTER);
-
+    
+    //bottom
     HBox bottom = new HBox();
     bottom.setAlignment(Pos.BOTTOM_LEFT);
     bottom.setSpacing(815);
@@ -78,6 +92,7 @@ public class WelcomeFX extends Application {
     });
     done.setMinSize(100, 50);
     bottom.getChildren().addAll(exit, done);
+    //left
     VBox left = new VBox();
     FileInputStream inputPic = new FileInputStream("Money.jpg");
     Image image = new Image(inputPic);
@@ -86,6 +101,7 @@ public class WelcomeFX extends Application {
     newImage.setFitWidth(400);
     left.getChildren().add(newImage);
     
+    //right
     VBox right = new VBox();
     FileInputStream inputPicTwo = new FileInputStream("Money.jpg");
     Image imageTwo = new Image(inputPicTwo);
