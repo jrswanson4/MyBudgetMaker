@@ -33,6 +33,7 @@ public class WelcomeFX extends Application {
   private static final int WINDOW_WIDTH = 1800;
   private static final int WINDOW_HEIGHT = 1000;
   Scene SceneOne, SceneTwo, SceneThree;
+  BudgetMakerDriver driver = new BudgetMakerDriver();
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -64,7 +65,7 @@ public class WelcomeFX extends Application {
       File selectedFile = fileChooser.showOpenDialog(primaryStage);
       mid.getChildren().add(new Label("\n" + ""));
       if(selectedFile.getName().contains(".csv")) {
-        BudgetMakerDriver driver = new BudgetMakerDriver();
+        
         driver.go(selectedFile);
         
       }else {
@@ -137,22 +138,41 @@ public class WelcomeFX extends Application {
     
     VBox leftTwo = new VBox();
     leftTwo.setPrefSize(600, 1000);
+    leftTwo.setPadding(new Insets(10, 10, 10, 10));
+    leftTwo.setSpacing(50);
+    //question 1
     Label questionOne = new Label("How many people are in your household?" +"\n");
     questionOne.setFont(new Font("Ariel", 18));
     TextField question1 = new TextField("Answer Here");
-    Label space = new Label("\n" +"\n");
-    Label questionTwo = new Label("What are you saving money for?" +"\n");
+    
+    //Label space = new Label("\n" +"\n");
+    //question 2
+    Label questionTwo = new Label("How many children under 12 do you have?" +"\n");
     questionTwo.setFont(new Font("Ariel", 18));
     TextField question2 = new TextField("Answer Here");
-    Label questionThree = new Label("How much do you need to save?" +"\n");
+    
+    //Label space2 = new Label("\n" +"\n");
+    //question 3
+    Label questionThree = new Label("What are you saving money for?" +"\n");
     questionThree.setFont(new Font("Ariel", 18));
     TextField question3 = new TextField("Answer Here");
-    Label space2 = new Label("\n"+ "\n");
-    Label questionFour = new Label("How many months do you need to save for? (Just enter the number) " +"\n");
+    
+    //Label space3 = new Label("\n"+ "\n");
+    //question 4
+    Label questionFour = new Label("How much do you need to save?" +"\n");
     questionFour.setFont(new Font("Ariel", 18));
     TextField question4 = new TextField("Answer Here");
-    Label space3 = new Label("\n" + "\n");
-    leftTwo.getChildren().addAll(questionOne, question1, space, questionTwo, question2, space2, questionThree, question3, space3, questionFour, question4);
+    
+    //Label space4 = new Label("\n"+ "\n");
+    //question 5
+    Label questionFive = new Label("How many months do have to save? (Just enter the number) " +"\n");
+    questionFive.setFont(new Font("Ariel", 18));
+    TextField question5 = new TextField("Answer Here");
+    
+    //Label space5 = new Label("\n" + "\n");
+    
+    
+    leftTwo.getChildren().addAll(questionOne, question1, questionTwo, question2, questionThree, question3, questionFour, question4, questionFive, question5);
     leftTwo.setAlignment(Pos.TOP_LEFT);
     
     HBox bottom2 = new HBox();
@@ -164,6 +184,12 @@ public class WelcomeFX extends Application {
     });
     Button done2 = new Button("Done");
     done2.setOnAction(action -> {
+      driver.setNumInHouse(question1.getText());
+      driver.setKidsUnderTwelve(question2.getText());
+      driver.setSavingFor(question3.getText());
+      driver.setSavingFor(question4.getText());
+      driver.setSavingHowLong(question5.getText());
+      driver.newBudgetMaker();
       primaryStage.setScene(SceneThree);
     });
     bottom2.getChildren().addAll(exit2, done2);
